@@ -4,23 +4,20 @@
 body {
   background-image: url(https://cdn.jsdelivr.net/gh/maple-world/jjal/img/background/1.jpg);
   background-repeat: no-repeat;
+  max-width: 1920px;
+  margin: 0 auto;
+  background-position-x: center;
 }
 div {
-  color: hotpink;
+  color: #132a13;
   font-weight: bolder;
 }
-.text-green {
-  color: darkgreen;
-}
-.bc-blue {
-  background-color: aqua;
-}
 .box {
-  background-color: rgba(54, 169, 177, 0.5);
+  background-color: rgba(54, 169, 177, 0.7);
   border-style: dotted;
   border-color: mediumvioletred;
   border-width: 10px;
-  border: 5px solid red;
+  border: 5px solid #caffbf;
   border-radius: 20px;
   padding: 20px;
   margin-top: 30px;
@@ -34,7 +31,7 @@ select {
   appearance: none;
   padding: 5px;
   width: 90px;
-  border-color: hotpink;
+  border-color: #caffbf;
   border-radius: 5px;
   text-align: center;
 }
@@ -42,4 +39,38 @@ select {
   display: inline-block;
   width: 120px;
   margin: 15px 0px;
+}
+.header {
+  margin-left: auto;
+  background-color: rgba(199, 249, 204, 0.7);
+  width: fit-content;
+  padding: 5px 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.container {
+  width: 70%;
+  margin: auto;
+}
+.avatar {
+  margin: 20px;
+  text-align: center;
+}
+.footer {
+  text-align: center;
+  margin-top: 40px;
+}
+input[type="button"] {
+  appearance: none;
+  padding: 15px;
+  width: 80px;
+  background-color: #b5e48cce;
+  border: 3px solid #caffbf;
+  border-radius: 90px;
+  color: #132a13;
+  font-weight: bolder;
+  cursor: pointer;
+}
+input[type="button"]:hover {
+  background-color: #d9ed92d2;
 }
