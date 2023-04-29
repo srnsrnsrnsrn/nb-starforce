@@ -1,16 +1,41 @@
 const 강화 = document.getElementById("강화버튼");
 const 시도횟수 = document.getElementById("시도");
 const 총메소 = document.getElementById("총메소");
-// ToDo : 필요메소 직접 구하기
-const 필요메소 = 100000;
 const 별들 = document.getElementsByClassName("fa-star");
+const 현재별문구 = document.getElementById("현재별");
+const 다음별문구 = document.getElementById("다음별");
+const 성공확률문구 = document.getElementById("성공확률");
+const 실패확률문구 = document.getElementById("실패확률");
+const 필요메소문구 = document.getElementById("필요메소");
 let 현재별 = 0;
 
-function 별색칠() {
+function 강화비용계산(장비레벨) {
+  let 강화비용;
+  if (현재별 < 10) {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1)) / 25;
+  } else if (현재별 < 11) {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1) ** 2.7) / 400;
+  } else if (현재별 < 12) {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1) ** 2.7) / 220;
+  } else if (현재별 < 13) {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1) ** 2.7) / 150;
+  } else if (현재별 < 14) {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1) ** 2.7) / 110;
+  } else if (현재별 < 15) {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1) ** 2.7) / 75;
+  } else {
+    강화비용 = 1000 + (장비레벨 ** 3 * (현재별 + 1) ** 2.7) / 200;
+  }
+  강화비용 = Math.round(강화비용 / 100) * 100;
+  return 강화비용;
+}
+
+function 강화확률계산() {
   const 뽑은숫자 = Math.floor(Math.random() * 100) + 1;
   let 성공확률;
   let 실패확률;
   let 파괴확률 = 0;
+
   if (현재별 < 3) {
     실패확률 = 현재별 * 5 + 5;
   } else if (현재별 < 15) {
@@ -46,6 +71,14 @@ function 별색칠() {
     //성공
     현재별 = 현재별 + 1;
   }
+  return {
+    성공확률: 성공확률,
+    실패확률: 실패확률,
+    파괴확률: 파괴확률,
+    현재별: 현재별,
+  };
+}
+function 별색칠() {
   for (let i = 0; i < 25; i = i + 1) {
     if (i < 현재별) {
       별들[i].classList.replace("fa-regular", "fa-solid");
@@ -53,10 +86,17 @@ function 별색칠() {
       별들[i].classList.replace("fa-solid", "fa-regular");
     }
   }
+
   //if(현재별);
   //별5.children[0].classList.replace("fa-regular", "fa-solid");
 }
 function 강화함수() {
+  const 필요메소 = 강화비용계산(140);
+
+  const 확률모음 = 강화확률계산();
+  별색칠();
+  const 강화비용 = 강화비용계산(140);
+  console.log(강화비용);
   시도횟수.innerText = +시도횟수.innerText + 1;
   // +시도횟수 = parseInt(시도횟수)
   총메소.innerText = (
@@ -77,8 +117,11 @@ function 강화함수() {
   // 버튼 클릭시 0 + 100000 = 100000(숫자)
   // 숫자라는 타입을 문자열로 변환
   // 필요메소.toString()
-  //ㅋㅋ
-  별색칠();
+  현재별문구.innerText = 확률모음.현재별;
+  다음별문구.innerText = 확률모음.현재별 + 1 === 26 ? 25 : 현재별 + 1;
+  성공확률문구.innerText = 확률모음.성공확률.toFixed(1);
+  실패확률문구.innerText = 확률모음.실패확률.toFixed(1);
+  필요메소문구.innerText = 필요메소.toLocaleString();
 }
 
 강화.addEventListener("click", 강화함수);
