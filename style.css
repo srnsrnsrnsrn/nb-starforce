@@ -41,9 +41,10 @@ select {
   margin: 15px 0px;
 }
 .header {
+  text-align: center;
   margin-left: auto;
   background-color: rgba(199, 249, 204, 0.7);
-  width: fit-content;
+  width: 100%;
   padding: 5px 10px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -82,4 +83,32 @@ input[type="button"]:hover {
 
 .visiblity-hidden {
   visibility: hidden;
+}
+
+.popup {
+  width: 300px;
+  height: 130px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgba(54, 169, 177);
+  border-style: dotted;
+  border-width: 10px;
+  border: 5px solid #caffbf;
+  border-radius: 20px;
+}
+
+.background {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

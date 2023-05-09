@@ -1,6 +1,7 @@
 const 강화 = document.getElementById("강화버튼");
 const 시도횟수 = document.getElementById("시도");
 const 총메소 = document.getElementById("총메소");
+const 파괴횟수 = document.getElementById("파괴횟수");
 const 별들 = document.getElementsByClassName("fa-star");
 const 현재별문구 = document.getElementById("현재별");
 const 다음별문구 = document.getElementById("다음별");
@@ -9,6 +10,9 @@ const 실패확률문구 = document.getElementById("실패확률");
 const 파괴확률문구 = document.getElementById("파괴확률");
 const 필요메소문구 = document.getElementById("필요메소");
 const 파괴 = document.getElementById("파괴");
+const 팝업 = document.getElementById("팝업");
+const 파괴확인 = document.getElementById("파괴확인");
+const 초기화버튼 = document.getElementById("초기화버튼");
 
 let 현재별 = 0;
 
@@ -82,6 +86,8 @@ function 강화여부() {
 
     if (뽑은숫자 - 강화확률.성공확률 * 10 <= 강화확률.파괴확률 * 10) {
       현재별 = 12;
+      팝업.classList.remove("visiblity-hidden");
+      파괴횟수.innerText = +파괴횟수.innerText + 1;
     } else {
       if (현재별 > 15) {
         현재별 = 현재별 - 1;
@@ -144,4 +150,27 @@ function 강화함수() {
   필요메소문구.innerText = 필요메소.toLocaleString();
 }
 
+function 초기화함수() {
+  현재별 = 0;
+  const 확률모음 = 강화확률계산();
+  const 필요메소 = 강화비용계산(140);
+  별색칠();
+  파괴.classList.add("visiblity-hidden");
+
+  시도횟수.innerText = 0;
+  총메소.innerText = 0;
+  파괴횟수.innerText = 0;
+  현재별문구.innerText = 확률모음.현재별;
+  다음별문구.innerText = 확률모음.현재별 + 1 === 26 ? 25 : 현재별 + 1;
+  성공확률문구.innerText = 확률모음.성공확률.toFixed(1);
+  실패확률문구.innerText = 확률모음.실패확률.toFixed(1);
+  파괴확률문구.innerText = 확률모음.파괴확률.toFixed(1);
+  필요메소문구.innerText = 필요메소.toLocaleString();
+}
+
 강화.addEventListener("click", 강화함수);
+파괴확인.addEventListener("click", function () {
+  팝업.classList.add("visiblity-hidden");
+  파괴.classList.add("visiblity-hidden");
+});
+초기화버튼.addEventListener("click", 초기화함수);
