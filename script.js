@@ -13,8 +13,13 @@ const 파괴 = document.getElementById("파괴");
 const 팝업 = document.getElementById("팝업");
 const 파괴확인 = document.getElementById("파괴확인");
 const 초기화버튼 = document.getElementById("초기화버튼");
+const 실패 = document.getElementById("실패");
+const 찬스타임 = document.getElementById("찬스타임");
+const 장비레벨선택 = document.getElementById("장비레벨");
 
 let 현재별 = 0;
+let 연속실패횟수 = 0;
+let 장비레벨 = 140;
 
 function 강화비용계산(장비레벨) {
   let 강화비용;
@@ -56,17 +61,31 @@ function 강화확률계산() {
     } else if (현재별 < 22) {
       파괴확률 = 7;
       실패확률 = 63;
-    } else if ((현재별 = 22)) {
+    } else if (현재별 === 22) {
       파괴확률 = 19.4;
       실패확률 = 77.6;
-    } else if ((현재별 = 23)) {
+    } else if (현재별 === 23) {
       파괴확률 = 29.4;
       실패확률 = 68.6;
-    } else if ((현재별 = 24)) {
+    } else if (현재별 === 24) {
       파괴확률 = 39.6;
       실패확률 = 59.4;
     }
   }
+
+  if (연속실패횟수 === 2) {
+    //찬스타임
+    파괴확률 = 0;
+    실패확률 = 0;
+    파괴.classList.add("visiblity-hidden");
+    실패.classList.add("display-none");
+    찬스타임.classList.remove("display-none");
+  } else {
+    파괴.classList.remove("visiblity-hidden");
+    실패.classList.remove("display-none");
+    찬스타임.classList.add("display-none");
+  }
+
   성공확률 = 100 - (실패확률 + 파괴확률);
 
   return {
@@ -89,13 +108,15 @@ function 강화여부() {
       팝업.classList.remove("visiblity-hidden");
       파괴횟수.innerText = +파괴횟수.innerText + 1;
     } else {
-      if (현재별 > 15) {
+      if ((현재별 > 15 && 현재별 < 20) || 현재별 > 20) {
         현재별 = 현재별 - 1;
+        연속실패횟수 = 연속실패횟수 + 1;
       }
     }
   } else {
     //성공
     현재별 = 현재별 + 1;
+    연속실패횟수 = 0;
   }
 
   if (현재별 > 14) {
@@ -116,12 +137,11 @@ function 별색칠() {
   //별5.children[0].classList.replace("fa-regular", "fa-solid");
 }
 function 강화함수() {
-  const 강화비용 = 강화비용계산(140);
-
+  const 강화비용 = 강화비용계산(장비레벨);
   강화여부();
   별색칠();
   const 확률모음 = 강화확률계산();
-  const 필요메소 = 강화비용계산(140);
+  const 필요메소 = 강화비용계산(장비레벨);
   시도횟수.innerText = +시도횟수.innerText + 1;
   // +시도횟수 = parseInt(시도횟수)
   총메소.innerText = (
@@ -153,7 +173,7 @@ function 강화함수() {
 function 초기화함수() {
   현재별 = 0;
   const 확률모음 = 강화확률계산();
-  const 필요메소 = 강화비용계산(140);
+  const 필요메소 = 강화비용계산(장비레벨);
   별색칠();
   파괴.classList.add("visiblity-hidden");
 
@@ -174,3 +194,10 @@ function 초기화함수() {
   파괴.classList.add("visiblity-hidden");
 });
 초기화버튼.addEventListener("click", 초기화함수);
+장비레벨선택.addEventListener("change", function () {
+  const 장비레벨선택값 = document.querySelector(
+    "#장비레벨 option:checked"
+  ).value;
+  장비레벨 = 장비레벨선택값;
+  초기화함수();
+});
