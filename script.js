@@ -186,7 +186,6 @@ function 강화확률계산(기본강화값 = false) {
 function 강화여부() {
   const 뽑은숫자 = Math.floor(Math.random() * 100000) + 1;
   const 강화확률 = 강화확률계산();
-  console.log(강화확률);
 
   if (뽑은숫자 > 강화확률.성공확률 * 1000) {
     //실패
